@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","31");
+		_this.setReserved("build","33");
 	} else {
-		_this.h["build"] = "31";
+		_this.h["build"] = "33";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -8031,14 +8031,68 @@ var Player = function(X,Y) {
 	if(X == null) {
 		X = 0;
 	}
+	this.speed = 200;
 	flixel_FlxSprite.call(this,X,Y);
 	this.makeGraphic(16,16,-65536);
+	this.drag.set_x(this.drag.set_y(1600));
 };
 $hxClasses["Player"] = Player;
 Player.__name__ = "Player";
 Player.__super__ = flixel_FlxSprite;
 Player.prototype = $extend(flixel_FlxSprite.prototype,{
-	__class__: Player
+	speed: null
+	,update: function(elapsed) {
+		this.movement();
+		flixel_FlxSprite.prototype.update.call(this,elapsed);
+	}
+	,movement: function() {
+		var _up = false;
+		var _down = false;
+		var _left = false;
+		var _right = false;
+		_up = flixel_FlxG.keys.checkKeyArrayState([38,87],1);
+		_down = flixel_FlxG.keys.checkKeyArrayState([40,83],1);
+		_left = flixel_FlxG.keys.checkKeyArrayState([37,65],1);
+		_right = flixel_FlxG.keys.checkKeyArrayState([39,68],1);
+		if(_up && _down) {
+			_down = false;
+			_up = _down;
+		}
+		if(_left && _right) {
+			_right = false;
+			_left = _right;
+		}
+		if(_up || _down || _left || _right) {
+			var mA = 0;
+			if(_up) {
+				mA = -90;
+				if(_left) {
+					mA -= 45;
+				} else if(_right) {
+					mA += 45;
+				}
+			} else if(_down) {
+				mA = 90;
+				if(_left) {
+					mA += 45;
+				} else if(_right) {
+					mA -= 45;
+				}
+			} else if(_left) {
+				mA = 180;
+			} else if(_right) {
+				mA = 0;
+			}
+			this.velocity.set(this.speed,0);
+			var tmp = this.velocity;
+			var point = flixel_math_FlxPoint._pool.get().set(0,0);
+			point._inPool = false;
+			var point1 = point;
+			point1._weak = true;
+			tmp.rotate(point1,mA);
+		}
+	}
+	,__class__: Player
 });
 var Reflect = function() { };
 $hxClasses["Reflect"] = Reflect;
