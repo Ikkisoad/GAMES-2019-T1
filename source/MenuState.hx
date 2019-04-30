@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.tile.FlxTilemap;
+
 
 class MenuState extends FlxState{
     var _title:FlxText;

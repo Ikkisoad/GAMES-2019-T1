@@ -5,6 +5,7 @@ package;
  import flixel.util.FlxColor;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
+ import flixel.*;
 
  class Player extends FlxSprite{
 
@@ -12,8 +13,15 @@ package;
 
     public function new(?X:Float=0, ?Y:Float=0){
         super(X, Y);
-        makeGraphic(16, 16, 0xFFFF0000);
+        loadGraphic(AssetPaths.spr_player__png, true, 32, 32);
+        setFacingFlip(FlxObject.LEFT, false, false);
+        setFacingFlip(FlxObject.RIGHT, true, false);
+        animation.add("lr", [2, 2, 2, 2], 2, false);
+        animation.add("u", [0, 0, 0, 0], 0, false);
+        animation.add("d", [1, 1, 1, 1], 1, false);
         drag.x = drag.y = 1600;
+        setSize(25, 30);
+        offset.set(4, 2);
     }
 
     override public function update(elapsed:Float):Void{
@@ -37,29 +45,41 @@ package;
 
         if (_up || _down || _left || _right){
             var mA:Float = 0;
-            if (_up)
-            {
+            if (_up){
                 mA = -90;
                 if (_left)
                     mA -= 45;
                 else if (_right)
                     mA += 45;
-            }
-            else if (_down)
-            {
+                facing = FlxObject.UP;
+            }else if (_down){
                 mA = 90;
                 if (_left)
                     mA += 45;
                 else if (_right)
                     mA -= 45;
-            }
-            else if (_left)
+                facing = FlxObject.DOWN;
+            }else if (_left){
                 mA = 180;
-            else if (_right)
+                facing = FlxObject.LEFT;
+            }else if(_right){
                 mA = 0;
+                facing = FlxObject.RIGHT;
+            }
 
             velocity.set(speed, 0);
             velocity.rotate(FlxPoint.weak(0, 0), mA);
+
+             if ((velocity.x != 0 || velocity.y != 0) && touching == FlxObject.NONE){
+                switch (facing){
+                    case FlxObject.LEFT, FlxObject.RIGHT:
+                        animation.play("lr");
+                    case FlxObject.UP:
+                        animation.play("u");
+                    case FlxObject.DOWN:
+                        animation.play("d");
+                }
+            }
         }
     }
  }
