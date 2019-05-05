@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","71");
+		_this.setReserved("build","75");
 	} else {
-		_this.h["build"] = "71";
+		_this.h["build"] = "75";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -7541,6 +7541,121 @@ EReg.prototype = {
 	}
 	,__class__: EReg
 };
+var Enemy = function(X,Y,EType) {
+	if(Y == null) {
+		Y = 0;
+	}
+	if(X == null) {
+		X = 0;
+	}
+	this.seesPlayer = false;
+	this.speed = 140;
+	flixel_FlxSprite.call(this,X,Y);
+	this.etype = EType;
+	this.loadGraphic("assets/images/enemy-" + this.etype + ".png",true,16,16);
+	this._facingFlip.h[1] = { x : false, y : false};
+	this._facingFlip.h[16] = { x : true, y : false};
+	this.animation.add("d",[0,1,0,2],6,false);
+	this.animation.add("lr",[3,4,3,5],6,false);
+	this.animation.add("u",[6,7,6,8],6,false);
+	this.drag.set_x(this.drag.set_y(10));
+	this.set_width(8);
+	this.set_height(14);
+	this.offset.set_x(4);
+	this.offset.set_y(2);
+	this._brain = new FSM($bind(this,this.idle));
+	this._idleTmr = 0;
+	var point = flixel_math_FlxPoint._pool.get().set(0,0);
+	point._inPool = false;
+	this.playerPos = point;
+};
+$hxClasses["Enemy"] = Enemy;
+Enemy.__name__ = "Enemy";
+Enemy.__super__ = flixel_FlxSprite;
+Enemy.prototype = $extend(flixel_FlxSprite.prototype,{
+	speed: null
+	,etype: null
+	,_brain: null
+	,_idleTmr: null
+	,_moveDir: null
+	,seesPlayer: null
+	,playerPos: null
+	,draw: function() {
+		if((this.velocity.x != 0 || this.velocity.y != 0) && this.touching == 0) {
+			if(Math.abs(this.velocity.x) > Math.abs(this.velocity.y)) {
+				if(this.velocity.x < 0) {
+					this.set_facing(1);
+				} else {
+					this.set_facing(16);
+				}
+			} else if(this.velocity.y < 0) {
+				this.set_facing(256);
+			} else {
+				this.set_facing(4096);
+			}
+			switch(this.facing) {
+			case 1:case 16:
+				this.animation.play("lr");
+				break;
+			case 256:
+				this.animation.play("u");
+				break;
+			case 4096:
+				this.animation.play("d");
+				break;
+			}
+		}
+		flixel_FlxSprite.prototype.draw.call(this);
+	}
+	,idle: function() {
+		if(this.seesPlayer) {
+			this._brain.activeState = $bind(this,this.chase);
+		} else if(this._idleTmr <= 0) {
+			if(flixel_FlxG.random.float(0,100) < 1) {
+				this._moveDir = -1;
+				this.velocity.set_x(this.velocity.set_y(0));
+			} else {
+				this._moveDir = flixel_FlxG.random.int(0,8) * 45;
+				this.velocity.set(this.speed * 0.5,0);
+				var tmp = this.velocity;
+				var point = flixel_math_FlxPoint._pool.get().set(0,0);
+				point._inPool = false;
+				var point1 = point;
+				point1._weak = true;
+				tmp.rotate(point1,this._moveDir);
+			}
+			this._idleTmr = flixel_FlxG.random.int(1,4);
+		} else {
+			this._idleTmr -= flixel_FlxG.elapsed;
+		}
+	}
+	,chase: function() {
+		if(!this.seesPlayer) {
+			this._brain.activeState = $bind(this,this.idle);
+		} else {
+			flixel_math_FlxVelocity.moveTowardsPoint(this,this.playerPos,this.speed | 0);
+		}
+	}
+	,update: function(elapsed) {
+		this._brain.update();
+		flixel_FlxSprite.prototype.update.call(this,elapsed);
+	}
+	,__class__: Enemy
+});
+var FSM = function(InitState) {
+	this.activeState = InitState;
+};
+$hxClasses["FSM"] = FSM;
+FSM.__name__ = "FSM";
+FSM.prototype = {
+	activeState: null
+	,update: function() {
+		if(this.activeState != null) {
+			this.activeState();
+		}
+	}
+	,__class__: FSM
+};
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = "HxOverrides";
@@ -7648,7 +7763,7 @@ ManifestResources.init = function(config) {
 	lime_utils_Assets.defaultRootPath = ManifestResources.rootPath;
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i3134R3R4R5R7R6tgoR0y28:assets%2Fdata%2Froom-001.oelR2i3011R3R4R5R8R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3y5:IMAGER5R9R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R10R5R11R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R10R5R12R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R13R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R14R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR16y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R15R5y28:flixel%2Fsounds%2Fflixel.mp3R17aR19y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R18R17aR16R18hgoR2i33629R3R21R5R20R17aR19R20hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R22R23y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R10R5R28R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R10R5R29R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i3846R3R4R5R7R6tgoR0y28:assets%2Fdata%2Froom-001.oelR2i3256R3R4R5R8R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i2405R3y5:IMAGER5R9R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i2558R3R10R5R11R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R10R5R12R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R10R5R13R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R10R5R14R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R15R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R16R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR18y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R17R5y28:flixel%2Fsounds%2Fflixel.mp3R19aR21y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R20R19aR18R20hgoR2i33629R3R23R5R22R19aR21R22hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R24R25y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R10R5R30R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R10R5R31R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -8043,6 +8158,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,_map: null
 	,_mWalls: null
 	,_grpCoins: null
+	,_grpEnemies: null
 	,create: function() {
 		this._map = new flixel_addons_editors_ogmo_FlxOgmoLoader("assets/data/room-001.oel");
 		this._mWalls = this._map.loadTilemap("assets/images/tiles.png",16,16,"walls");
@@ -8052,6 +8168,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this._mWalls);
 		this._grpCoins = new flixel_group_FlxTypedGroup();
 		this.add(this._grpCoins);
+		this._grpEnemies = new flixel_group_FlxTypedGroup();
+		this.add(this._grpEnemies);
 		this._player = new Player();
 		this._map.loadEntities($bind(this,this.placeEntities),"entities");
 		this.add(this._player);
@@ -8061,6 +8179,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		flixel_FlxState.prototype.update.call(this,elapsed);
 		flixel_FlxG.overlap(this._player,this._mWalls,null,flixel_FlxObject.separate);
 		flixel_FlxG.overlap(this._player,this._grpCoins,$bind(this,this.playerTouchCoin));
+		flixel_FlxG.overlap(this._grpEnemies,this._mWalls,null,flixel_FlxObject.separate);
+		this._grpEnemies.forEachAlive($bind(this,this.checkEnemyVision));
 	}
 	,placeEntities: function(entityName,entityData) {
 		var x = Std.parseInt(entityData.get("x"));
@@ -8070,11 +8190,27 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			this._player.set_y(y);
 		} else if(entityName == "coin") {
 			this._grpCoins.add(new Coin(x + 4,y + 4));
+		} else if(entityName == "enemy") {
+			this._grpEnemies.add(new Enemy(x + 4,y,Std.parseInt(entityData.get("etype"))));
 		}
 	}
 	,playerTouchCoin: function(P,C) {
 		if(P.alive && P.exists && C.alive && C.exists) {
 			C.kill();
+		}
+	}
+	,checkEnemyVision: function(e) {
+		if(this._mWalls.ray(e.getMidpoint(),this._player.getMidpoint())) {
+			e.seesPlayer = true;
+			var _this = e.playerPos;
+			var point = this._player.getMidpoint();
+			_this.set_x(point.x);
+			_this.set_y(point.y);
+			if(point._weak) {
+				point.put();
+			}
+		} else {
+			e.seesPlayer = false;
 		}
 	}
 	,__class__: PlayState
@@ -40310,7 +40446,7 @@ flixel_tweens_FlxTweenManager.prototype = $extend(flixel_FlxBasic.prototype,{
 		}
 		return Tween;
 	}
-	,add_flixel_tweens_misc_VarTween: function(Tween,Start) {
+	,add_flixel_tweens_FlxTween: function(Tween,Start) {
 		if(Start == null) {
 			Start = false;
 		}
@@ -40323,7 +40459,7 @@ flixel_tweens_FlxTweenManager.prototype = $extend(flixel_FlxBasic.prototype,{
 		}
 		return Tween;
 	}
-	,add_flixel_tweens_FlxTween: function(Tween,Start) {
+	,add_flixel_tweens_misc_VarTween: function(Tween,Start) {
 		if(Start == null) {
 			Start = false;
 		}
@@ -69812,7 +69948,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 164916;
+	this.version = 221334;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -114365,6 +114501,8 @@ openfl_display_DisplayObject.__tempStack = new lime_utils_ObjectPool(function() 
 AssetPaths.data_goes_here__txt = "assets/data/data-goes-here.txt";
 AssetPaths.map_0__oep = "assets/data/map_0.oep";
 AssetPaths.room_001__oel = "assets/data/room-001.oel";
+AssetPaths.enemy_0__png = "assets/images/enemy-0.png";
+AssetPaths.enemy_1__png = "assets/images/enemy-1.png";
 AssetPaths.spr_coin__png = "assets/images/spr_coin.png";
 AssetPaths.spr_player__png = "assets/images/spr_player.png";
 AssetPaths.tiles__png = "assets/images/tiles.png";
