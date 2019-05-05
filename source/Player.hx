@@ -5,7 +5,8 @@ package;
  import flixel.util.FlxColor;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
- import flixel.*;
+ import flixel.FlxObject;
+ //import flixel.*;
 
  class Player extends FlxSprite{
 
