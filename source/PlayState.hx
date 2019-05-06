@@ -9,6 +9,9 @@ import flixel.group.FlxGroup;
 
 class PlayState extends FlxState
 {
+	var _hud:HUD;
+	var _money:Int = 0;
+	var _health:Int = 3;
 	var _player:Player;
 	var _map:FlxOgmoLoader;
  	var _mWalls:FlxTilemap;
@@ -34,6 +37,9 @@ class PlayState extends FlxState
 		_player = new Player();
  		_map.loadEntities(placeEntities, "entities");
  		add(_player);
+
+		_hud = new HUD();
+		add(_hud);
 
 		super.create();
 	}
@@ -63,6 +69,8 @@ class PlayState extends FlxState
 
 	function playerTouchCoin(P:Player, C:Coin):Void{
 		if (P.alive && P.exists && C.alive && C.exists){
+			_money++;
+			_hud.updateHUD(_health, _money);
 			C.kill();
 		}
 	}
