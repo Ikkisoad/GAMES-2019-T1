@@ -17,6 +17,7 @@ class PlayState extends FlxState
  	var _mWalls:FlxTilemap;
 	var _grpCoins:FlxTypedGroup<Coin>;
 	var _grpEnemies:FlxTypedGroup<Enemy>;
+    public static var _bullets:FlxTypedGroup<Bullet>;
 
 	override public function create():Void{
 
@@ -40,6 +41,16 @@ class PlayState extends FlxState
 
 		_hud = new HUD();
 		add(_hud);
+
+		
+        _bullets = new FlxTypedGroup<Bullet>();
+		for(i in 0...200){
+            var s = new Bullet();
+            s.kill();
+
+            _bullets.add(s);
+        }
+        add(_bullets);
 
 		super.create();
 	}

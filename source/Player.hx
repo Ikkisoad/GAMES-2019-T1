@@ -6,6 +6,8 @@ package;
  import flixel.FlxG;
  import flixel.math.FlxPoint;
  import flixel.FlxObject;
+ import flixel.group.FlxGroup;
+ import flixel.math.FlxAngle;
  //import flixel.*;
 
  class Player extends FlxSprite{
@@ -23,10 +25,13 @@ package;
         drag.x = drag.y = 1600;
         setSize(25, 30);
         offset.set(4, 2);
+        //loadGraphic(AssetPaths.canon__png, true, 32, 32);
+        
     }
 
     override public function update(elapsed:Float):Void{
         movement();
+        shoot();
         super.update(elapsed);
     }
 
@@ -82,5 +87,19 @@ package;
                 }
             }
         }
+    }
+
+    function shoot(){
+        if (FlxG.keys.justPressed.SPACE || FlxG.mouse.justPressed){
+			var bullet:Bullet = PlayState._bullets.recycle();
+			bullet.reset(x + (width - bullet.width) / 2, y + (height - bullet.height) / 2);
+			bullet.angle = FlxAngle.angleBetweenMouse(this, true);
+			
+			bullet.velocity.set(150, 0);
+			bullet.velocity.rotate(FlxPoint.weak(0, 0), bullet.angle);
+			
+			bullet.velocity.x *= 2;
+			bullet.velocity.y *= 2;
+		}
     }
  }
