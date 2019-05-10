@@ -70,7 +70,7 @@ import sys.FileSystem;
 
 		#else
 
-		data = '{"name":null,"assets":"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i3846R3R4R5R7R6tgoR0y28:assets%2Fdata%2Froom-001.oelR2i3256R3R4R5R8R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R9R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R11R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R10R5R13R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R12R5R14R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i2405R3R10R5R15R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i2558R3R10R5R16R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R10R5R17R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R10R5R18R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R10R5R19R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R10R5R20R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R21R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R22R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR24y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R23R5y28:flixel%2Fsounds%2Fflixel.mp3R25aR27y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R26R25aR24R26hgoR2i33629R3R29R5R28R25aR27R28hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R30R31y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R10R5R36R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R10R5R37R6tgh","rootPath":null,"version":2,"libraryArgs":[],"libraryType":null}';
+		data = '{"name":null,"assets":"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y28:assets%2Fdata%2Froom-001.oelR2i3256R3R4R5R8R6tgoR0y28:assets%2Fdata%2Froom-002.oelR2i10125R3R4R5R9R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R10R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R12R6tgoR0y28:assets%2Fimages%2Fcamera.pngR2i3902R3R11R5R14R6tgoR0y28:assets%2Fimages%2Fcamera.psdR2i28675R3R13R5R15R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R11R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R13R5R17R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R11R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i40187R3R13R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4586R3R11R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i44744R3R13R5R21R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R11R5R22R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R11R5R23R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R11R5R24R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R11R5R25R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R26R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R27R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR29y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R28R5y28:flixel%2Fsounds%2Fflixel.mp3R30aR32y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R31R30aR29R31hgoR2i33629R3R34R5R33R30aR32R33hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R35R36y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R11R5R41R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R11R5R42R6tgh","rootPath":null,"version":2,"libraryArgs":[],"libraryType":null}';
 		manifest = AssetManifest.parse (data, rootPath);
 		library = AssetLibrary.fromManifest (manifest);
 		Assets.registerLibrary ("default", library);
@@ -101,12 +101,17 @@ null
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_map_0_oep extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_room_001_oel extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_room_002_oel extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_bullet_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_bullet_psd extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_camera_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_camera_psd extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_canon_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_canon_psd extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_enemy_0_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_enemy_0_psd extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_enemy_1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_enemy_1_psd extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_health_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_spr_coin_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_spr_player_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -129,12 +134,17 @@ null
 @:keep @:file("assets/data/data-goes-here.txt") @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends haxe.io.Bytes {}
 @:keep @:file("assets/data/map_0.oep") @:noCompletion #if display private #end class __ASSET__assets_data_map_0_oep extends haxe.io.Bytes {}
 @:keep @:file("assets/data/room-001.oel") @:noCompletion #if display private #end class __ASSET__assets_data_room_001_oel extends haxe.io.Bytes {}
+@:keep @:file("assets/data/room-002.oel") @:noCompletion #if display private #end class __ASSET__assets_data_room_002_oel extends haxe.io.Bytes {}
 @:keep @:image("assets/images/bullet.png") @:noCompletion #if display private #end class __ASSET__assets_images_bullet_png extends lime.graphics.Image {}
 @:keep @:file("assets/images/bullet.psd") @:noCompletion #if display private #end class __ASSET__assets_images_bullet_psd extends haxe.io.Bytes {}
+@:keep @:image("assets/images/camera.png") @:noCompletion #if display private #end class __ASSET__assets_images_camera_png extends lime.graphics.Image {}
+@:keep @:file("assets/images/camera.psd") @:noCompletion #if display private #end class __ASSET__assets_images_camera_psd extends haxe.io.Bytes {}
 @:keep @:image("assets/images/canon.png") @:noCompletion #if display private #end class __ASSET__assets_images_canon_png extends lime.graphics.Image {}
 @:keep @:file("assets/images/canon.psd") @:noCompletion #if display private #end class __ASSET__assets_images_canon_psd extends haxe.io.Bytes {}
 @:keep @:image("assets/images/enemy-0.png") @:noCompletion #if display private #end class __ASSET__assets_images_enemy_0_png extends lime.graphics.Image {}
+@:keep @:file("assets/images/enemy-0.psd") @:noCompletion #if display private #end class __ASSET__assets_images_enemy_0_psd extends haxe.io.Bytes {}
 @:keep @:image("assets/images/enemy-1.png") @:noCompletion #if display private #end class __ASSET__assets_images_enemy_1_png extends lime.graphics.Image {}
+@:keep @:file("assets/images/enemy-1.psd") @:noCompletion #if display private #end class __ASSET__assets_images_enemy_1_psd extends haxe.io.Bytes {}
 @:keep @:image("assets/images/health.png") @:noCompletion #if display private #end class __ASSET__assets_images_health_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/spr_coin.png") @:noCompletion #if display private #end class __ASSET__assets_images_spr_coin_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/spr_player.png") @:noCompletion #if display private #end class __ASSET__assets_images_spr_player_png extends lime.graphics.Image {}

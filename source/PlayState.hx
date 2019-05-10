@@ -6,9 +6,11 @@ import flixel.tile.FlxTilemap;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
+import flixel.FlxCamera;
+import flixel.math.FlxPoint;
+import flixel.FlxSprite;
 
-class PlayState extends FlxState
-{
+class PlayState extends FlxState{
 	var _hud:HUD;
 	var _money:Int = 0;
 	var _health:Int = 3;
@@ -17,12 +19,17 @@ class PlayState extends FlxState
  	var _mWalls:FlxTilemap;
 	var _grpCoins:FlxTypedGroup<Coin>;
 	var _grpEnemies:FlxTypedGroup<Enemy>;
+	var spr_cam:FlxSprite;
+
     public static var _bullets:FlxTypedGroup<Bullet>;
 
 	override public function create():Void{
 
-		
-		_map = new FlxOgmoLoader(AssetPaths.room_001__oel);
+		spr_cam = new FlxSprite();
+        spr_cam.makeGraphic(64, 16, 0xFFFFFFFF);
+		spr_cam.velocity.y = -10;
+
+		_map = new FlxOgmoLoader(AssetPaths.room_002__oel);
 		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
 		_mWalls.follow();
 		_mWalls.setTileProperties(1, FlxObject.NONE);
@@ -51,30 +58,38 @@ class PlayState extends FlxState
             _bullets.add(s);
         }
         add(_bullets);
+		add(spr_cam);
 
+		FlxG.camera.follow(spr_cam, TOPDOWN, 1);
+		/*var camera2 = new FlxCamera();
+		camera2.focusOn(new FlxPoint(_player.x,_player.y));
+		FlxG.cameras.reset(camera2);*/
 		super.create();
 	}
 
-	override public function update(elapsed:Float):Void
-	{
+	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
 		FlxG.collide(_player, _mWalls);
 		FlxG.overlap(_player, _grpCoins, playerTouchCoin);
 		FlxG.collide(_grpEnemies, _mWalls);
+		FlxG.overlap(_bullets, _grpEnemies, bulletHits);
  		_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
 	 function placeEntities(entityName:String, entityData:Xml):Void{
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
-		if (entityName == "player")
-		{
+		if (entityName == "player"){
 			_player.x = x;
 			_player.y = y;
-		} else if (entityName == "coin"){
+		}else if (entityName == "coin"){
      		_grpCoins.add(new Coin(x + 4, y + 4));
  		}else if (entityName == "enemy"){
 			_grpEnemies.add(new Enemy(x + 4, y, Std.parseInt(entityData.get("etype"))));
+		}else if (entityName == "camera"){
+			spr_cam.x = x;
+			spr_cam.y = y;
+			spr_cam.velocity.y = -10;
 		}
 	}
 
@@ -94,5 +109,11 @@ class PlayState extends FlxState
 		}
 		else
 			e.seesPlayer = false;
+	}
+
+	function bulletHits(Object1:FlxObject, Object2:FlxObject){
+		Object1.kill();
+		Object2.kill();
+		//increaseScore();
 	}
 }

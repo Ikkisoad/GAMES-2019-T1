@@ -86,6 +86,9 @@ package;
                         animation.play("d");
                 }
             }
+        }else{
+            this.velocity.y = -10;
+            animation.play("u");
         }
     }
 
@@ -98,8 +101,8 @@ package;
 			bullet.velocity.set(150, 0);
 			bullet.velocity.rotate(FlxPoint.weak(0, 0), bullet.angle);
 			
-			bullet.velocity.x *= 2;
-			bullet.velocity.y *= 2;
+			bullet.velocity.x *= 5;
+			bullet.velocity.y *= 5;
 		}
     }
  }
