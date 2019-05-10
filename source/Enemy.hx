@@ -104,9 +104,7 @@
         if (!seesPlayer)
         {
             _brain.activeState = idle;
-        }
-        else
-        {
+        }else if(isOnScreen()){
             FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
         }
     }

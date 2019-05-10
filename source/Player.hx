@@ -87,7 +87,7 @@ package;
                 }
             }
         }else{
-            this.velocity.y = -10;
+            this.velocity.y = PlayState._camSpeed * 2;
             animation.play("u");
         }
     }

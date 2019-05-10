@@ -48,5 +48,6 @@
     <enemy id="15" x="320" y="416" etype="0" />
     <enemy id="16" x="192" y="448" etype="0" />
     <enemy id="17" x="544" y="400" etype="1" />
+    <camera id="18" x="544" y="368" />
   </entities>
 </level>
