@@ -44,11 +44,10 @@
     <coin id="11" x="496" y="96" />
     <coin id="12" x="576" y="32" />
     <enemy id="13" x="560" y="208" etype="0" />
-    <enemy id="14" x="416" y="288" etype="0" />
+    <enemy id="14" x="416" y="288" etype="1" />
     <enemy id="15" x="320" y="416" etype="0" />
     <enemy id="16" x="192" y="448" etype="0" />
     <enemy id="17" x="544" y="400" etype="1" />
     <camera id="18" x="544" y="368" />
-    <flyer id="19" x="256" y="272" etype="0" />
   </entities>
 </level>

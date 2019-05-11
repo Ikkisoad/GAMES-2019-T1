@@ -121,15 +121,15 @@
     <enemy id="5" x="560" y="1280" etype="0" />
     <enemy id="6" x="592" y="1200" etype="0" />
     <enemy id="7" x="208" y="800" etype="0" />
-    <enemy id="8" x="304" y="800" etype="0" />
+    <enemy id="8" x="304" y="800" etype="1" />
     <enemy id="9" x="432" y="800" etype="0" />
     <enemy id="10" x="80" y="416" etype="0" />
     <enemy id="11" x="192" y="320" etype="0" />
-    <enemy id="12" x="432" y="336" etype="0" />
+    <enemy id="12" x="432" y="336" etype="1" />
     <enemy id="13" x="528" y="432" etype="0" />
     <enemy id="14" x="304" y="464" etype="0" />
     <enemy id="15" x="320" y="128" etype="0" />
-    <enemy id="16" x="304" y="80" etype="0" />
+    <enemy id="16" x="304" y="80" etype="1" />
     <enemy id="17" x="320" y="48" etype="0" />
     <enemy id="18" x="288" y="32" etype="0" />
     <camera id="19" x="320" y="1616" />
@@ -142,7 +142,5 @@
     <coin id="26" x="448" y="1568" />
     <coin id="27" x="256" y="1568" />
     <enemy id="28" x="336" y="1536" etype="0" />
-    <flyer id="29" x="48" y="880" etype="1" />
-    <flyer id="30" x="528" y="880" etype="2" />
   </entities>
 </level>

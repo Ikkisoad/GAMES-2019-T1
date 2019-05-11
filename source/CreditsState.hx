@@ -11,7 +11,7 @@ class CreditsState extends FlxState {
     var _CREDITS_VELOCITY = -256;
 
     override public function create():Void{
-        _creditsText = new FlxText(0,0,0,"Created by:\nIkkisoad\n\n\n\nSpecial thanks:\nHaxeFlixel",12);
+        _creditsText = new FlxText(0,0,0,"Created by:\nIkkisoad\nTile by:\nIkkisoad\nSprites by:\nIkkisoad\nSpecial thanks:\nHaxeFlixel",12);
         _creditsText.x = FlxG.width/2 - _creditsText.width / 2;
         _creditsText.y = FlxG.height;
         _creditsText.moves = true;

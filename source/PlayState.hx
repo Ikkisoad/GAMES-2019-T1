@@ -15,7 +15,7 @@ class PlayState extends FlxState{
 	var _hud:HUD;
 	var _money:Int = 0;
 	var _stage:Int = 1;
-	var _lives:Int = 3;
+	var _lives:Int = 9;
 	public static var _camSpeed:Int = 0;
 	public static var _player:Player;
 	var _canon:Canon;
@@ -30,7 +30,7 @@ class PlayState extends FlxState{
 	override public function create():Void{
 
 		spr_cam = new FlxSprite();
-        spr_cam.makeGraphic(16, 16, 0xFFFFFFFF);
+        spr_cam.makeGraphic(16, 16, 0x00FFFFFF);
 
 		_grpCoins = new FlxTypedGroup<Coin>();
 		_grpEnemies = new FlxTypedGroup<Enemy>();
@@ -79,6 +79,10 @@ class PlayState extends FlxState{
 		FlxG.switchState(new GameOverState(false, _money));
 	}
 
+	function win(){
+		FlxG.switchState(new GameOverState(true, _money));
+	}
+
 	function clear_stage(){
 		if(_stage == 1){
 			_camSpeed = 0;
@@ -101,8 +105,16 @@ class PlayState extends FlxState{
 			if(!spr_cam.isOnScreen()){
 				_stage++;
 				removeALL();
+				_camSpeed = 0;
+				spr_cam.velocity.x = 50;
 				_hud.updateHUD(_lives, _money, _stage);
 				stage(_stage);
+			}
+		}else if(_stage == 4){
+			if(!spr_cam.isOnScreen()){
+				_stage++;
+				removeALL();
+				FlxG.camera.fade(FlxColor.BLACK, .33, false, win);
 			}
 		}
 
