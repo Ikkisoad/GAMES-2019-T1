@@ -9,19 +9,21 @@ import flixel.group.FlxGroup;
 import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState{
 	var _hud:HUD;
 	var _money:Int = 0;
 	var _stage:Int = 1;
-	var _health:Int = 3;
-	public static var _camSpeed:Int = -10;
-	var _player:Player;
+	var _lives:Int = 3;
+	public static var _camSpeed:Int = 0;
+	public static var _player:Player;
+	var _canon:Canon;
 	var _map:FlxOgmoLoader;
  	var _mWalls:FlxTilemap;
 	var _grpCoins:FlxTypedGroup<Coin>;
 	var _grpEnemies:FlxTypedGroup<Enemy>;
-	var spr_cam:FlxSprite;
+	public static var spr_cam:FlxSprite;
 
     public static var _bullets:FlxTypedGroup<Bullet>;
 
@@ -33,8 +35,7 @@ class PlayState extends FlxState{
 		_grpCoins = new FlxTypedGroup<Coin>();
 		_grpEnemies = new FlxTypedGroup<Enemy>();
 		_player = new Player();
-		
-
+		_canon = new Canon();
 		_hud = new HUD();
 		
 
@@ -54,21 +55,68 @@ class PlayState extends FlxState{
 		super.update(elapsed);
 		FlxG.collide(_player, _mWalls);
 		FlxG.overlap(_player, _grpCoins, playerTouchCoin);
+		//FlxG.overlap(_bullets, _mWalls, bulletDies);
+		FlxG.overlap(_player, _grpEnemies, playerDies);
 		FlxG.collide(_grpEnemies, _mWalls);
 		FlxG.overlap(_bullets, _grpEnemies, bulletHits);
  		_grpEnemies.forEachAlive(checkEnemyVision);
 		clear_stage();
+		if(!_player.isOnScreen()){
+			remove(_player);
+			_lives--;
+			_hud.updateHUD(_lives, _money);
+			_player.x = spr_cam.x;
+			_player.y = spr_cam.y;
+			add(_player);
+		}
+		if (_lives < 1){
+			FlxG.camera.fade(FlxColor.BLACK, .33, false, end);
+			return;
+		}
+	}
+
+	function end(){
+		FlxG.switchState(new GameOverState(false, _money));
 	}
 
 	function clear_stage(){
 		if(_stage == 1){
-				if(_grpEnemies.countLiving() == 0){
-					_stage++;
-					removeALL();
-					stage(_stage);
-				}
+			_camSpeed = 0;
+			if(_grpEnemies.countLiving() == 0){
+				_stage++;
+				removeALL();
+				_camSpeed = -50;
+				stage(_stage);
+			}
+		}else if(_stage == 2){
+			if(!spr_cam.isOnScreen()){
+				_stage++;
+				removeALL();
+				_camSpeed = 50;
+				stage(_stage);
+			}
+		}else if(_stage == 3){
+			if(!spr_cam.isOnScreen()){
+				_stage++;
+				removeALL();
+				stage(_stage);
+			}
 		}
 
+	}
+
+	function bulletDies(B:Bullet, M:FlxTilemap):Void{
+		B.kill();
+	}
+
+	function playerDies(P:Player, E:Enemy):Void{
+		remove(_player);
+		E.destroy();
+		_lives--;
+		_hud.updateHUD(_lives, _money);
+		_player.x = spr_cam.x;
+		_player.y = spr_cam.y;
+		add(_player);
 	}
 
 	function removeALL() {
@@ -79,6 +127,7 @@ class PlayState extends FlxState{
 		remove(_grpEnemies);
 		remove(_bullets);
 		remove(_hud);
+		remove(_canon);
 	}
 
 	 function placeEntities(entityName:String, entityData:Xml):Void{
@@ -94,14 +143,13 @@ class PlayState extends FlxState{
 		}else if (entityName == "camera"){
 			spr_cam.x = x;
 			spr_cam.y = y;
-			spr_cam.velocity.y = _camSpeed;
 		}
 	}
 
 	function playerTouchCoin(P:Player, C:Coin):Void{
 		if (P.alive && P.exists && C.alive && C.exists){
 			_money++;
-			_hud.updateHUD(_health, _money);
+			_hud.updateHUD(_lives, _money);
 			C.kill();
 		}
 	}
@@ -135,11 +183,14 @@ class PlayState extends FlxState{
 		add(_mWalls);
 
 		_map.loadEntities(placeEntities, "entities");
+		
 		add(_grpEnemies);
 		add(_grpCoins);
 		add(_player);
 		add(spr_cam);
 		add(_hud);
+		add(_canon);
+		spr_cam.velocity.y = _camSpeed;
 		for(i in 0...100){
             var s = new Bullet();
             s.kill();

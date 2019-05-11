@@ -8,8 +8,7 @@
  import flixel.FlxObject;
  import flixel.math.FlxVelocity;
  
- class Enemy extends FlxSprite
- {
+ class Enemy extends FlxSprite{
      public var speed:Float = 140;
      public var etype(default, null):Int;
     var _brain:FSM;
@@ -18,8 +17,7 @@
     public var seesPlayer:Bool = false;
     public var playerPos(default, null):FlxPoint;
 
-     public function new(X:Float=0, Y:Float=0, EType:Int)
-     {
+     public function new(X:Float=0, Y:Float=0, EType:Int){
          super(X, Y);
          etype = EType;
          loadGraphic("assets/images/enemy-" + etype + ".png", true, 16, 16);
@@ -38,8 +36,7 @@
         playerPos = FlxPoint.get();
      }
 
-     override public function draw():Void
-     {
+     override public function draw():Void{
          if ((velocity.x != 0 || velocity.y != 0 ) && touching == FlxObject.NONE)
          {
              if (Math.abs(velocity.x) > Math.abs(velocity.y))
@@ -101,16 +98,14 @@
 
     public function chase():Void
     {
-        if (!seesPlayer)
-        {
+        if (!seesPlayer){
             _brain.activeState = idle;
         }else if(isOnScreen()){
             FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
         }
     }
 
-    override public function update(elapsed:Float):Void
-    {
+    override public function update(elapsed:Float):Void{
         _brain.update();
         super.update(elapsed);
     }

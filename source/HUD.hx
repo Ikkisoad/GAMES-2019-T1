@@ -16,8 +16,7 @@ package;
      var _sprHealth:FlxSprite;
      var _sprMoney:FlxSprite;
 
-     public function new()
-     {
+     public function new(){
          super();
          _sprBack = new FlxSprite().makeGraphic(FlxG.width, 20, FlxColor.BLACK);
          _sprBack.drawRect(0, 19, FlxG.width, 1, FlxColor.WHITE);

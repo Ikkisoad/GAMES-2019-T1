@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","189");
+		_this.setReserved("build","255");
 	} else {
-		_this.h["build"] = "189";
+		_this.h["build"] = "255";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -6761,20 +6761,34 @@ flixel_FlxSprite.prototype = $extend(flixel_FlxObject.prototype,{
 var Bullet = function() {
 	flixel_FlxSprite.call(this);
 	this.loadGraphic("assets/images/bullet.png",true,6,6);
-	this.animation.add("u",[0,0,0,0],0,false);
 };
 $hxClasses["Bullet"] = Bullet;
 Bullet.__name__ = "Bullet";
 Bullet.__super__ = flixel_FlxSprite;
 Bullet.prototype = $extend(flixel_FlxSprite.prototype,{
 	update: function(elapsed) {
-		this.animation.play("u");
 		if(!this.isOnScreen()) {
 			this.kill();
 		}
 		flixel_FlxSprite.prototype.update.call(this,elapsed);
 	}
 	,__class__: Bullet
+});
+var Canon = function() {
+	flixel_FlxSprite.call(this);
+	this.loadGraphic("assets/images/canon.png",true,10,15);
+};
+$hxClasses["Canon"] = Canon;
+Canon.__name__ = "Canon";
+Canon.__super__ = flixel_FlxSprite;
+Canon.prototype = $extend(flixel_FlxSprite.prototype,{
+	update: function(elapsed) {
+		this.set_angle(flixel_math_FlxAngle.angleBetweenMouse(this,true) + 90);
+		this.set_x(PlayState._player.x + 9);
+		this.set_y(PlayState._player.y + 5);
+		flixel_FlxSprite.prototype.update.call(this,elapsed);
+	}
+	,__class__: Canon
 });
 var Coin = function(X,Y) {
 	if(Y == null) {
@@ -7674,6 +7688,74 @@ FSM.prototype = {
 	}
 	,__class__: FSM
 };
+var GameOverState = function(Win,Score) {
+	this._score = 0;
+	this._win = Win;
+	this._score = Score;
+	flixel_FlxState.call(this);
+};
+$hxClasses["GameOverState"] = GameOverState;
+GameOverState.__name__ = "GameOverState";
+GameOverState.__super__ = flixel_FlxState;
+GameOverState.prototype = $extend(flixel_FlxState.prototype,{
+	_score: null
+	,_win: null
+	,_txtTitle: null
+	,_txtMessage: null
+	,_sprScore: null
+	,_txtScore: null
+	,_txtHiScore: null
+	,_btnMainMenu: null
+	,create: function() {
+		flixel_FlxG.mouse.set_visible(true);
+		this._txtTitle = new flixel_text_FlxText(0,20,0,this._win ? "You Win!" : "Game Over!",22);
+		this._txtTitle.set_alignment("center");
+		this._txtTitle.screenCenter(flixel_util_FlxAxes.X);
+		this.add(this._txtTitle);
+		this._txtMessage = new flixel_text_FlxText(0,flixel_FlxG.height / 2 - 18,0,"Final Score:",8);
+		this._txtMessage.set_alignment("center");
+		this._txtMessage.screenCenter(flixel_util_FlxAxes.X);
+		this.add(this._txtMessage);
+		this._sprScore = new flixel_FlxSprite(flixel_FlxG.width / 2 - 8,0,"assets/images/spr_coin.png");
+		this._sprScore.screenCenter(flixel_util_FlxAxes.Y);
+		this.add(this._sprScore);
+		this._txtScore = new flixel_text_FlxText(flixel_FlxG.width / 2,0,0,Std.string(this._score),8);
+		this._txtScore.screenCenter(flixel_util_FlxAxes.Y);
+		this.add(this._txtScore);
+		var _hiScore = this.checkHiScore(this._score);
+		this._txtHiScore = new flixel_text_FlxText(0,flixel_FlxG.height / 2 + 10,0,"Hi-Score: " + _hiScore,8);
+		this._txtHiScore.set_alignment("center");
+		this._txtHiScore.screenCenter(flixel_util_FlxAxes.Y);
+		this.add(this._txtHiScore);
+		this._btnMainMenu = new flixel_ui_FlxButton(0,flixel_FlxG.height - 32,"Main Menu",$bind(this,this.goMainMenu));
+		this._btnMainMenu.screenCenter(flixel_util_FlxAxes.X);
+		this.add(this._btnMainMenu);
+		flixel_FlxG.camera.fade(-16777216,.33,true);
+		flixel_FlxState.prototype.create.call(this);
+	}
+	,checkHiScore: function(Score) {
+		var _hi = Score;
+		var _save = new flixel_util_FlxSave();
+		if(_save.bind("flixel-tutorial")) {
+			if(_save.data.hiscore != null && _save.data.hiscore > _hi) {
+				_hi = _save.data.hiscore;
+			} else {
+				_save.data.hiscore = _hi;
+			}
+		}
+		_save.close();
+		return _hi;
+	}
+	,goMainMenu: function() {
+		flixel_FlxG.camera.fade(-16777216,.33,false,function() {
+			var nextState = new MenuState();
+			if(flixel_FlxG.game._state.switchTo(nextState)) {
+				flixel_FlxG.game._requestedState = nextState;
+			}
+		});
+	}
+	,__class__: GameOverState
+});
 var HUD = function() {
 	flixel_group_FlxTypedGroup.call(this);
 	this._sprBack = new flixel_FlxSprite().makeGraphic(flixel_FlxG.width,20,-16777216);
@@ -7832,7 +7914,7 @@ ManifestResources.init = function(config) {
 	lime_utils_Assets.defaultRootPath = ManifestResources.rootPath;
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3296R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i10486R3R4R5R9R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R10R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R12R6tgoR0y28:assets%2Fimages%2Fcamera.pngR2i3902R3R11R5R14R6tgoR0y28:assets%2Fimages%2Fcamera.psdR2i28675R3R13R5R15R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R11R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R13R5R17R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R11R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i40187R3R13R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4586R3R11R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i44744R3R13R5R21R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R11R5R22R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R11R5R23R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R11R5R24R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R11R5R25R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R26R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R27R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR29y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R28R5y28:flixel%2Fsounds%2Fflixel.mp3R30aR32y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R31R30aR29R31hgoR2i33629R3R34R5R33R30aR32R33hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R35R36y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R11R5R41R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R11R5R42R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3345R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i10584R3R4R5R9R6tgoR0y26:assets%2Fdata%2Froom-3.oelR2i11863R3R4R5R10R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R11R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R13R6tgoR0y28:assets%2Fimages%2Fcamera.pngR2i3902R3R12R5R15R6tgoR0y28:assets%2Fimages%2Fcamera.psdR2i28675R3R14R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R12R5R17R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R14R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R12R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i40187R3R14R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4586R3R12R5R21R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i44744R3R14R5R22R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R12R5R23R6tgoR0y27:assets%2Fimages%2Fship2.pngR2i3714R3R12R5R24R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R12R5R25R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R12R5R26R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R12R5R27R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R28R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R29R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR31y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R30R5y28:flixel%2Fsounds%2Fflixel.mp3R32aR34y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R33R32aR31R33hgoR2i33629R3R36R5R35R32aR34R35hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R37R38y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R12R5R43R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R12R5R44R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -8217,93 +8299,141 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	,__class__: MenuState
 });
 var PlayState = function(MaxSize) {
-	this._health = 3;
+	this._lives = 3;
 	this._stage = 1;
 	this._money = 0;
 	flixel_FlxState.call(this,MaxSize);
 };
 $hxClasses["PlayState"] = PlayState;
 PlayState.__name__ = "PlayState";
+PlayState._player = null;
+PlayState.spr_cam = null;
 PlayState._bullets = null;
 PlayState.__super__ = flixel_FlxState;
 PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	_hud: null
 	,_money: null
 	,_stage: null
-	,_health: null
-	,_player: null
+	,_lives: null
+	,_canon: null
 	,_map: null
 	,_mWalls: null
 	,_grpCoins: null
 	,_grpEnemies: null
-	,spr_cam: null
 	,create: function() {
-		this.spr_cam = new flixel_FlxSprite();
-		this.spr_cam.makeGraphic(16,16,-1);
+		PlayState.spr_cam = new flixel_FlxSprite();
+		PlayState.spr_cam.makeGraphic(16,16,-1);
 		this._grpCoins = new flixel_group_FlxTypedGroup();
 		this._grpEnemies = new flixel_group_FlxTypedGroup();
-		this._player = new Player();
+		PlayState._player = new Player();
+		this._canon = new Canon();
 		this._hud = new HUD();
 		PlayState._bullets = new flixel_group_FlxTypedGroup();
-		flixel_FlxG.camera.follow(this.spr_cam,flixel_FlxCameraFollowStyle.TOPDOWN,1);
+		flixel_FlxG.camera.follow(PlayState.spr_cam,flixel_FlxCameraFollowStyle.TOPDOWN,1);
 		this.stage(this._stage);
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,update: function(elapsed) {
 		flixel_FlxState.prototype.update.call(this,elapsed);
-		flixel_FlxG.overlap(this._player,this._mWalls,null,flixel_FlxObject.separate);
-		flixel_FlxG.overlap(this._player,this._grpCoins,$bind(this,this.playerTouchCoin));
+		flixel_FlxG.overlap(PlayState._player,this._mWalls,null,flixel_FlxObject.separate);
+		flixel_FlxG.overlap(PlayState._player,this._grpCoins,$bind(this,this.playerTouchCoin));
+		flixel_FlxG.overlap(PlayState._player,this._grpEnemies,$bind(this,this.playerDies));
 		flixel_FlxG.overlap(this._grpEnemies,this._mWalls,null,flixel_FlxObject.separate);
 		flixel_FlxG.overlap(PlayState._bullets,this._grpEnemies,$bind(this,this.bulletHits));
 		this._grpEnemies.forEachAlive($bind(this,this.checkEnemyVision));
 		this.clear_stage();
+		if(!PlayState._player.isOnScreen()) {
+			this.remove(PlayState._player);
+			this._lives--;
+			this._hud.updateHUD(this._lives,this._money);
+			PlayState._player.set_x(PlayState.spr_cam.x);
+			PlayState._player.set_y(PlayState.spr_cam.y);
+			this.add(PlayState._player);
+		}
+		if(this._lives < 1) {
+			flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.end));
+			return;
+		}
+	}
+	,end: function() {
+		var nextState = new GameOverState(false,this._money);
+		if(flixel_FlxG.game._state.switchTo(nextState)) {
+			flixel_FlxG.game._requestedState = nextState;
+		}
 	}
 	,clear_stage: function() {
 		if(this._stage == 1) {
+			PlayState._camSpeed = 0;
 			if(this._grpEnemies.countLiving() == 0) {
+				this._stage++;
+				this.removeALL();
+				PlayState._camSpeed = -50;
+				this.stage(this._stage);
+			}
+		} else if(this._stage == 2) {
+			if(!PlayState.spr_cam.isOnScreen()) {
+				this._stage++;
+				this.removeALL();
+				PlayState._camSpeed = 50;
+				this.stage(this._stage);
+			}
+		} else if(this._stage == 3) {
+			if(!PlayState.spr_cam.isOnScreen()) {
 				this._stage++;
 				this.removeALL();
 				this.stage(this._stage);
 			}
 		}
 	}
+	,bulletDies: function(B,M) {
+		B.kill();
+	}
+	,playerDies: function(P,E) {
+		this.remove(PlayState._player);
+		E.destroy();
+		this._lives--;
+		this._hud.updateHUD(this._lives,this._money);
+		PlayState._player.set_x(PlayState.spr_cam.x);
+		PlayState._player.set_y(PlayState.spr_cam.y);
+		this.add(PlayState._player);
+	}
 	,removeALL: function() {
 		this.remove(this._mWalls,true);
-		this.remove(this._player,true);
-		this.remove(this.spr_cam,true);
+		this.remove(PlayState._player,true);
+		this.remove(PlayState.spr_cam,true);
 		this.remove(this._grpCoins);
 		this.remove(this._grpEnemies);
 		this.remove(PlayState._bullets);
 		this.remove(this._hud);
+		this.remove(this._canon);
 	}
 	,placeEntities: function(entityName,entityData) {
 		var x = Std.parseInt(entityData.get("x"));
 		var y = Std.parseInt(entityData.get("y"));
 		if(entityName == "player") {
-			this._player.set_x(x);
-			this._player.set_y(y);
+			PlayState._player.set_x(x);
+			PlayState._player.set_y(y);
 		} else if(entityName == "coin") {
 			this._grpCoins.add(new Coin(x + 4,y + 4));
 		} else if(entityName == "enemy") {
 			this._grpEnemies.add(new Enemy(x + 4,y,Std.parseInt(entityData.get("etype"))));
 		} else if(entityName == "camera") {
-			this.spr_cam.set_x(x);
-			this.spr_cam.set_y(y);
-			this.spr_cam.velocity.set_y(PlayState._camSpeed);
+			PlayState.spr_cam.set_x(x);
+			PlayState.spr_cam.set_y(y);
 		}
 	}
 	,playerTouchCoin: function(P,C) {
 		if(P.alive && P.exists && C.alive && C.exists) {
 			this._money++;
-			this._hud.updateHUD(this._health,this._money);
+			this._hud.updateHUD(this._lives,this._money);
 			C.kill();
 		}
 	}
 	,checkEnemyVision: function(e) {
-		if(this._mWalls.ray(e.getMidpoint(),this._player.getMidpoint())) {
+		if(this._mWalls.ray(e.getMidpoint(),PlayState._player.getMidpoint())) {
 			e.seesPlayer = true;
 			var _this = e.playerPos;
-			var point = this._player.getMidpoint();
+			var point = PlayState._player.getMidpoint();
 			_this.set_x(point.x);
 			_this.set_y(point.y);
 			if(point._weak) {
@@ -8333,9 +8463,11 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this._map.loadEntities($bind(this,this.placeEntities),"entities");
 		this.add(this._grpEnemies);
 		this.add(this._grpCoins);
-		this.add(this._player);
-		this.add(this.spr_cam);
+		this.add(PlayState._player);
+		this.add(PlayState.spr_cam);
 		this.add(this._hud);
+		this.add(this._canon);
+		PlayState.spr_cam.velocity.set_y(PlayState._camSpeed);
 		var _g = 0;
 		while(_g < 100) {
 			var i2 = _g++;
@@ -8438,9 +8570,6 @@ Player.prototype = $extend(flixel_FlxSprite.prototype,{
 					break;
 				}
 			}
-		} else {
-			this.velocity.set_y(PlayState._camSpeed * 2);
-			this.animation.play("u");
 		}
 	}
 	,shoot: function() {
@@ -70103,7 +70232,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 865711;
+	this.version = 944657;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -114668,6 +114797,7 @@ AssetPaths.enemy_0__psd = "assets/images/enemy-0.psd";
 AssetPaths.enemy_1__png = "assets/images/enemy-1.png";
 AssetPaths.enemy_1__psd = "assets/images/enemy-1.psd";
 AssetPaths.health__png = "assets/images/health.png";
+AssetPaths.ship2__png = "assets/images/ship2.png";
 AssetPaths.spr_coin__png = "assets/images/spr_coin.png";
 AssetPaths.spr_player__png = "assets/images/spr_player.png";
 AssetPaths.tiles__png = "assets/images/tiles.png";
@@ -114711,7 +114841,7 @@ flixel_FlxObject._secondSeparateFlxRect = (function($this) {
 }(this));
 openfl_text_Font.__fontByName = new haxe_ds_StringMap();
 openfl_text_Font.__registeredFonts = [];
-PlayState._camSpeed = -10;
+PlayState._camSpeed = 0;
 Xml.Element = 0;
 Xml.PCData = 1;
 Xml.CData = 2;
