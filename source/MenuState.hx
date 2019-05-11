@@ -9,6 +9,7 @@ import flixel.tile.FlxTilemap;
 
 class MenuState extends FlxState{
     var _title:FlxText;
+    var _instructions:FlxText;
     var _btnPlay:FlxButton;
     var _btnCredits:FlxButton;
 
@@ -16,6 +17,10 @@ class MenuState extends FlxState{
         _title = new FlxText(0,0,0,"Strike Tanker S.T.T.",35);
         _title.x = FlxG.width/2 - _title.width/2;
         _title.y = FlxG.height/4;
+
+        _instructions = new FlxText(0,0,0,"Use WASD and Arrow Keys for movement\nUse SPACE and Left Mouse Button to shoot",15);
+        _instructions.x = _title.x;
+        _instructions.y = _title.y + 150;
 
         _btnPlay = new FlxButton(_title.x + _title.width/3, _title.y + _title.height + 15, "Start", goPlay);
       //  _btnPlay.x = FlxG.width/2 - _btnPlay.width / 2;
@@ -25,6 +30,7 @@ class MenuState extends FlxState{
         _btnCredits.y = _btnPlay.y + _btnCredits.height + 2;
 
         add(_title);
+        add(_instructions);
         add(_btnPlay);
         add(_btnCredits);
         

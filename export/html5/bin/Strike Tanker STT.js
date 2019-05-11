@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","263");
+		_this.setReserved("build","272");
 	} else {
-		_this.h["build"] = "263";
+		_this.h["build"] = "272";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -7926,7 +7926,7 @@ ManifestResources.init = function(config) {
 	lime_utils_Assets.defaultRootPath = ManifestResources.rootPath;
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3345R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i10584R3R4R5R9R6tgoR0y26:assets%2Fdata%2Froom-3.oelR2i11863R3R4R5R10R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R11R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R13R6tgoR0y28:assets%2Fimages%2Fcamera.pngR2i3902R3R12R5R15R6tgoR0y28:assets%2Fimages%2Fcamera.psdR2i28675R3R14R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R12R5R17R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R14R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R12R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i40187R3R14R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4586R3R12R5R21R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i44744R3R14R5R22R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R12R5R23R6tgoR0y27:assets%2Fimages%2Fship2.pngR2i3714R3R12R5R24R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i984R3R12R5R25R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R12R5R26R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R12R5R27R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R28R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R29R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR31y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R30R5y28:flixel%2Fsounds%2Fflixel.mp3R32aR34y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R33R32aR31R33hgoR2i33629R3R36R5R35R32aR34R35hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R37R38y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R12R5R43R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R12R5R44R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3345R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i10584R3R4R5R9R6tgoR0y26:assets%2Fdata%2Froom-3.oelR2i11863R3R4R5R10R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R11R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R13R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R12R5R15R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R14R5R16R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R12R5R17R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i40187R3R14R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4586R3R12R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i44744R3R14R5R20R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i2927R3R12R5R21R6tgoR0y28:assets%2Fimages%2Fhealth.psdR2i23410R3R14R5R22R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i2915R3R12R5R23R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R12R5R24R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R12R5R25R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R26R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R27R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR29y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R28R5y28:flixel%2Fsounds%2Fflixel.mp3R30aR32y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R31R30aR29R31hgoR2i33629R3R34R5R33R30aR32R33hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R35R36y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R12R5R41R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R12R5R42R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -8281,17 +8281,22 @@ MenuState.__name__ = "MenuState";
 MenuState.__super__ = flixel_FlxState;
 MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	_title: null
+	,_instructions: null
 	,_btnPlay: null
 	,_btnCredits: null
 	,create: function() {
 		this._title = new flixel_text_FlxText(0,0,0,"Strike Tanker S.T.T.",35);
 		this._title.set_x(flixel_FlxG.width / 2 - this._title.get_width() / 2);
 		this._title.set_y(flixel_FlxG.height / 4);
+		this._instructions = new flixel_text_FlxText(0,0,0,"Use WASD and Arrow Keys for movement\nUse SPACE and Left Mouse Button to shoot",15);
+		this._instructions.set_x(this._title.x);
+		this._instructions.set_y(this._title.y + 150);
 		this._btnPlay = new flixel_ui_FlxButton(this._title.x + this._title.get_width() / 3,this._title.y + this._title.get_height() + 15,"Start",$bind(this,this.goPlay));
 		this._btnCredits = new flixel_ui_FlxButton(0,0,"Credits",$bind(this,this.goToCredits));
 		this._btnCredits.set_x(this._btnPlay.x);
 		this._btnCredits.set_y(this._btnPlay.y + this._btnCredits.get_height() + 2);
 		this.add(this._title);
+		this.add(this._instructions);
 		this.add(this._btnPlay);
 		this.add(this._btnCredits);
 		flixel_FlxState.prototype.create.call(this);
