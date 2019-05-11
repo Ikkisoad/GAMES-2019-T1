@@ -64,7 +64,7 @@ class PlayState extends FlxState{
 		if(!_player.isOnScreen()){
 			remove(_player);
 			_lives--;
-			_hud.updateHUD(_lives, _money);
+			_hud.updateHUD(_lives, _money, _stage);
 			_player.x = spr_cam.x;
 			_player.y = spr_cam.y;
 			add(_player);
@@ -87,11 +87,13 @@ class PlayState extends FlxState{
 				removeALL();
 				_camSpeed = -50;
 				stage(_stage);
+				_hud.updateHUD(_lives, _money, _stage);
 			}
 		}else if(_stage == 2){
 			if(!spr_cam.isOnScreen()){
 				_stage++;
 				removeALL();
+				_hud.updateHUD(_lives, _money, _stage);
 				_camSpeed = 50;
 				stage(_stage);
 			}
@@ -99,6 +101,7 @@ class PlayState extends FlxState{
 			if(!spr_cam.isOnScreen()){
 				_stage++;
 				removeALL();
+				_hud.updateHUD(_lives, _money, _stage);
 				stage(_stage);
 			}
 		}
@@ -113,7 +116,7 @@ class PlayState extends FlxState{
 		remove(_player);
 		E.destroy();
 		_lives--;
-		_hud.updateHUD(_lives, _money);
+		_hud.updateHUD(_lives, _money, _stage);
 		_player.x = spr_cam.x;
 		_player.y = spr_cam.y;
 		add(_player);
@@ -149,7 +152,7 @@ class PlayState extends FlxState{
 	function playerTouchCoin(P:Player, C:Coin):Void{
 		if (P.alive && P.exists && C.alive && C.exists){
 			_money++;
-			_hud.updateHUD(_lives, _money);
+			_hud.updateHUD(_lives, _money, _stage);
 			C.kill();
 		}
 	}

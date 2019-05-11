@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","255");
+		_this.setReserved("build","263");
 	} else {
-		_this.h["build"] = "255";
+		_this.h["build"] = "263";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -7766,12 +7766,18 @@ var HUD = function() {
 	_this.set_borderColor(-8355712);
 	_this.set_borderSize(1);
 	_this.set_borderQuality(1);
-	this._txtMoney = new flixel_text_FlxText(0,2,0,"0",8);
-	var _this1 = this._txtMoney;
+	this._txtStage = new flixel_text_FlxText(flixel_FlxG.width / 2,2,0,"Stage 1",8);
+	var _this1 = this._txtStage;
 	_this1.set_borderStyle(flixel_text_FlxTextBorderStyle.SHADOW);
 	_this1.set_borderColor(-8355712);
 	_this1.set_borderSize(1);
 	_this1.set_borderQuality(1);
+	this._txtMoney = new flixel_text_FlxText(0,2,0,"0",8);
+	var _this2 = this._txtMoney;
+	_this2.set_borderStyle(flixel_text_FlxTextBorderStyle.SHADOW);
+	_this2.set_borderColor(-8355712);
+	_this2.set_borderSize(1);
+	_this2.set_borderQuality(1);
 	this._sprHealth = new flixel_FlxSprite(4,this._txtHealth.y + this._txtHealth.get_height() / 2 - 4,"assets/images/health.png");
 	this._sprMoney = new flixel_FlxSprite(flixel_FlxG.width - 12,this._txtMoney.y + this._txtMoney.get_height() / 2 - 4,"assets/images/spr_coin.png");
 	this._txtMoney.set_alignment("right");
@@ -7780,6 +7786,7 @@ var HUD = function() {
 	this.add(this._sprHealth);
 	this.add(this._sprMoney);
 	this.add(this._txtHealth);
+	this.add(this._txtStage);
 	this.add(this._txtMoney);
 	this.forEach(function(spr) {
 		spr.scrollFactor.set(0,0);
@@ -7791,18 +7798,23 @@ HUD.__super__ = flixel_group_FlxTypedGroup;
 HUD.prototype = $extend(flixel_group_FlxTypedGroup.prototype,{
 	_sprBack: null
 	,_txtHealth: null
+	,_txtStage: null
 	,_txtMoney: null
 	,_sprHealth: null
 	,_sprMoney: null
-	,updateHUD: function(Health,Money) {
+	,updateHUD: function(Health,Money,Stage) {
+		if(Stage == null) {
+			Stage = 0;
+		}
 		if(Money == null) {
 			Money = 0;
 		}
 		if(Health == null) {
 			Health = 0;
 		}
-		this._txtHealth.set_text((Health == null ? "null" : "" + Health) + " / 3");
+		this._txtHealth.set_text((Health == null ? "null" : "" + Health) + " / 9");
 		this._txtMoney.set_text(Money == null ? "null" : "" + Money);
+		this._txtStage.set_text("Stage " + (Stage == null ? "null" : "" + Stage));
 		this._txtMoney.set_x(this._sprMoney.x - this._txtMoney.get_width() - 4);
 	}
 	,__class__: HUD
@@ -8345,7 +8357,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		if(!PlayState._player.isOnScreen()) {
 			this.remove(PlayState._player);
 			this._lives--;
-			this._hud.updateHUD(this._lives,this._money);
+			this._hud.updateHUD(this._lives,this._money,this._stage);
 			PlayState._player.set_x(PlayState.spr_cam.x);
 			PlayState._player.set_y(PlayState.spr_cam.y);
 			this.add(PlayState._player);
@@ -8369,11 +8381,13 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 				this.removeALL();
 				PlayState._camSpeed = -50;
 				this.stage(this._stage);
+				this._hud.updateHUD(this._lives,this._money,this._stage);
 			}
 		} else if(this._stage == 2) {
 			if(!PlayState.spr_cam.isOnScreen()) {
 				this._stage++;
 				this.removeALL();
+				this._hud.updateHUD(this._lives,this._money,this._stage);
 				PlayState._camSpeed = 50;
 				this.stage(this._stage);
 			}
@@ -8381,6 +8395,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			if(!PlayState.spr_cam.isOnScreen()) {
 				this._stage++;
 				this.removeALL();
+				this._hud.updateHUD(this._lives,this._money,this._stage);
 				this.stage(this._stage);
 			}
 		}
@@ -8392,7 +8407,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this.remove(PlayState._player);
 		E.destroy();
 		this._lives--;
-		this._hud.updateHUD(this._lives,this._money);
+		this._hud.updateHUD(this._lives,this._money,this._stage);
 		PlayState._player.set_x(PlayState.spr_cam.x);
 		PlayState._player.set_y(PlayState.spr_cam.y);
 		this.add(PlayState._player);
@@ -8425,7 +8440,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,playerTouchCoin: function(P,C) {
 		if(P.alive && P.exists && C.alive && C.exists) {
 			this._money++;
-			this._hud.updateHUD(this._lives,this._money);
+			this._hud.updateHUD(this._lives,this._money,this._stage);
 			C.kill();
 		}
 	}
