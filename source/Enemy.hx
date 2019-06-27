@@ -9,8 +9,8 @@
  import flixel.math.FlxVelocity;
  
  class Enemy extends FlxSprite{
-     public var speed:Float = 140;
-     public var etype(default, null):Int;
+    public var speed:Float = 140;
+    static public var etype(default, null):Int;
     var _brain:FSM;
     var _idleTmr:Float;
     var _moveDir:Float;
@@ -20,6 +20,7 @@
      public function new(X:Float=0, Y:Float=0, EType:Int){
          super(X, Y);
          etype = EType;
+         speed += 50*etype;
          loadGraphic("assets/images/enemy-" + etype + ".png", true, 16, 16);
          setFacingFlip(FlxObject.LEFT, false, false);
          setFacingFlip(FlxObject.RIGHT, true, false);

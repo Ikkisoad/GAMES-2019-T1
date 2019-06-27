@@ -16,6 +16,7 @@ class PlayState extends FlxState{
 	var _money:Int = 0;
 	var _stage:Int = 1;
 	var _lives:Int = 9;
+	var _iframes:Int = 0;
 	public static var _camSpeed:Int = 0;
 	public static var _player:Player;
 	var _canon:Canon;
@@ -53,14 +54,19 @@ class PlayState extends FlxState{
 
 	override public function update(elapsed:Float):Void{
 		super.update(elapsed);
-		FlxG.collide(_player, _mWalls);
-		FlxG.overlap(_player, _grpCoins, playerTouchCoin);
-		//FlxG.overlap(_bullets, _mWalls, bulletDies);
-		FlxG.overlap(_player, _grpEnemies, playerDies);
-		FlxG.collide(_grpEnemies, _mWalls);
+		if(_iframes < 0){
+			FlxG.collide(_player, _mWalls);
+			FlxG.overlap(_player, _grpCoins, playerTouchCoin);
+			//FlxG.overlap(_bullets, _mWalls, bulletDies);
+			FlxG.overlap(_player, _grpEnemies, playerDies);
+			FlxG.collide(_grpEnemies, _mWalls);
+		}else{
+			_iframes--;			
+		}
 		FlxG.overlap(_bullets, _grpEnemies, bulletHits);
  		_grpEnemies.forEachAlive(checkEnemyVision);
 		clear_stage();
+		buyLive();
 		if(!_player.isOnScreen()){
 			remove(_player);
 			_lives--;
@@ -68,14 +74,12 @@ class PlayState extends FlxState{
 			_player.x = spr_cam.x;
 			_player.y = spr_cam.y;
 			add(_player);
+			_iframes = 100;
 		}
 		if (_lives < 1){
 			FlxG.camera.fade(FlxColor.BLACK, .33, false, end);
 			return;
 		}
-
-		buyLive();
-		
 	}
 
 	function end(){
@@ -134,6 +138,7 @@ class PlayState extends FlxState{
 		_hud.updateHUD(_lives, _money, _stage);
 		_player.x = spr_cam.x;
 		_player.y = spr_cam.y;
+		_iframes = 100;
 		add(_player);
 	}
 
@@ -174,9 +179,10 @@ class PlayState extends FlxState{
 	}
 
 	function buyLive():Void{
-		if(_money > 9 && _lives < 3){
+		if(_money > 99 && _lives < 3){
 			_money -= 10;
 			_lives++;
+			_hud.updateHUD(_lives, _money, _stage);
 		}
 	}
 
@@ -192,7 +198,15 @@ class PlayState extends FlxState{
 
 	function bulletHits(Object1:FlxObject, Object2:FlxObject){
 		Object1.kill();
+		
+		/*if(Object2:Enemy.etype){
+			_grpEnemies.add(new Enemy(Object2.x+2, Object2.y, 0));
+			_grpEnemies.add(new Enemy(Object2.x-2, Object2.y, 0));
+		}*/
+		
 		Object2.destroy();
+		_money++;
+		_hud.updateHUD(_lives, _money, _stage);
 		//increaseScore();
 	}
 

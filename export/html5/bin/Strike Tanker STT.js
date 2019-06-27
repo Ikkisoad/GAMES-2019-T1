@@ -894,9 +894,9 @@ ApplicationMain.create = function(config) {
 	ManifestResources.init(config);
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","286");
+		_this.setReserved("build","306");
 	} else {
-		_this.h["build"] = "286";
+		_this.h["build"] = "306";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -7583,8 +7583,9 @@ var Enemy = function(X,Y,EType) {
 	this.seesPlayer = false;
 	this.speed = 140;
 	flixel_FlxSprite.call(this,X,Y);
-	this.etype = EType;
-	this.loadGraphic("assets/images/enemy-" + this.etype + ".png",true,16,16);
+	Enemy.etype = EType;
+	this.speed += 50 * Enemy.etype;
+	this.loadGraphic("assets/images/enemy-" + Enemy.etype + ".png",true,16,16);
 	this._facingFlip.h[1] = { x : false, y : false};
 	this._facingFlip.h[16] = { x : true, y : false};
 	this.animation.add("d",[0,1,0,2],6,false);
@@ -7603,10 +7604,10 @@ var Enemy = function(X,Y,EType) {
 };
 $hxClasses["Enemy"] = Enemy;
 Enemy.__name__ = "Enemy";
+Enemy.etype = null;
 Enemy.__super__ = flixel_FlxSprite;
 Enemy.prototype = $extend(flixel_FlxSprite.prototype,{
 	speed: null
-	,etype: null
 	,_brain: null
 	,_idleTmr: null
 	,_moveDir: null
@@ -7909,7 +7910,7 @@ ManifestResources.init = function(config) {
 	lime_utils_Assets.defaultRootPath = ManifestResources.rootPath;
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$flixel_$fonts_$monsterrat_$ttf);
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3296R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i10487R3R4R5R9R6tgoR0y26:assets%2Fdata%2Froom-3.oelR2i11863R3R4R5R10R6tgoR0y26:assets%2Fdata%2Froom-4.oelR2i42127R3R4R5R11R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R12R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R14R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R13R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R15R5R17R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R13R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i35449R3R15R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4555R3R13R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i39509R3R15R5R21R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i2927R3R13R5R22R6tgoR0y28:assets%2Fimages%2Fhealth.psdR2i23410R3R15R5R23R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i2915R3R13R5R24R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R13R5R25R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i3036R3R13R5R26R6tgoR0y27:assets%2Fimages%2Ftiles.psdR2i33838R3R15R5R27R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R28R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R29R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR31y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R30R5y28:flixel%2Fsounds%2Fflixel.mp3R32aR34y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R33R32aR31R33hgoR2i33629R3R36R5R35R32aR34R35hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R37R38y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R13R5R43R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R13R5R44R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy34:assets%2Fdata%2Fdata-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y25:assets%2Fdata%2Fmap_0.oepR2i4415R3R4R5R7R6tgoR0y26:assets%2Fdata%2Froom-1.oelR2i3075R3R4R5R8R6tgoR0y26:assets%2Fdata%2Froom-2.oelR2i20223R3R4R5R9R6tgoR0y26:assets%2Fdata%2Froom-3.oelR2i19667R3R4R5R10R6tgoR0y26:assets%2Fdata%2Froom-4.oelR2i42127R3R4R5R11R6tgoR0y28:assets%2Fimages%2Fbullet.pngR2i2856R3y5:IMAGER5R12R6tgoR0y28:assets%2Fimages%2Fbullet.psdR2i25972R3y6:BINARYR5R14R6tgoR0y27:assets%2Fimages%2Fcanon.pngR2i3142R3R13R5R16R6tgoR0y27:assets%2Fimages%2Fcanon.psdR2i25800R3R15R5R17R6tgoR0y29:assets%2Fimages%2Fenemy-0.pngR2i4562R3R13R5R18R6tgoR0y29:assets%2Fimages%2Fenemy-0.psdR2i35449R3R15R5R19R6tgoR0y29:assets%2Fimages%2Fenemy-1.pngR2i4555R3R13R5R20R6tgoR0y29:assets%2Fimages%2Fenemy-1.psdR2i39509R3R15R5R21R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i2927R3R13R5R22R6tgoR0y28:assets%2Fimages%2Fhealth.psdR2i23410R3R15R5R23R6tgoR0y30:assets%2Fimages%2Fspr_coin.pngR2i2915R3R13R5R24R6tgoR0y32:assets%2Fimages%2Fspr_player.pngR2i3269R3R13R5R25R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i3036R3R13R5R26R6tgoR0y27:assets%2Fimages%2Ftiles.psdR2i33838R3R15R5R27R6tgoR0y36:assets%2Fmusic%2Fmusic-goes-here.txtR2zR3R4R5R28R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R29R6tgoR2i2114R3y5:MUSICR5y26:flixel%2Fsounds%2Fbeep.mp3y9:pathGroupaR31y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i39706R3R30R5y28:flixel%2Fsounds%2Fflixel.mp3R32aR34y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i5794R3y5:SOUNDR5R33R32aR31R33hgoR2i33629R3R36R5R35R32aR34R35hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R37R38y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R13R5R43R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R13R5R44R6tgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -8299,6 +8300,7 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	,__class__: MenuState
 });
 var PlayState = function(MaxSize) {
+	this._iframes = 0;
 	this._lives = 9;
 	this._stage = 1;
 	this._money = 0;
@@ -8315,6 +8317,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,_money: null
 	,_stage: null
 	,_lives: null
+	,_iframes: null
 	,_canon: null
 	,_map: null
 	,_mWalls: null
@@ -8335,13 +8338,18 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,update: function(elapsed) {
 		flixel_FlxState.prototype.update.call(this,elapsed);
-		flixel_FlxG.overlap(PlayState._player,this._mWalls,null,flixel_FlxObject.separate);
-		flixel_FlxG.overlap(PlayState._player,this._grpCoins,$bind(this,this.playerTouchCoin));
-		flixel_FlxG.overlap(PlayState._player,this._grpEnemies,$bind(this,this.playerDies));
-		flixel_FlxG.overlap(this._grpEnemies,this._mWalls,null,flixel_FlxObject.separate);
+		if(this._iframes < 0) {
+			flixel_FlxG.overlap(PlayState._player,this._mWalls,null,flixel_FlxObject.separate);
+			flixel_FlxG.overlap(PlayState._player,this._grpCoins,$bind(this,this.playerTouchCoin));
+			flixel_FlxG.overlap(PlayState._player,this._grpEnemies,$bind(this,this.playerDies));
+			flixel_FlxG.overlap(this._grpEnemies,this._mWalls,null,flixel_FlxObject.separate);
+		} else {
+			this._iframes--;
+		}
 		flixel_FlxG.overlap(PlayState._bullets,this._grpEnemies,$bind(this,this.bulletHits));
 		this._grpEnemies.forEachAlive($bind(this,this.checkEnemyVision));
 		this.clear_stage();
+		this.buyLive();
 		if(!PlayState._player.isOnScreen()) {
 			this.remove(PlayState._player);
 			this._lives--;
@@ -8349,12 +8357,12 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 			PlayState._player.set_x(PlayState.spr_cam.x);
 			PlayState._player.set_y(PlayState.spr_cam.y);
 			this.add(PlayState._player);
+			this._iframes = 100;
 		}
 		if(this._lives < 1) {
 			flixel_FlxG.camera.fade(-16777216,.33,false,$bind(this,this.end));
 			return;
 		}
-		this.buyLive();
 	}
 	,end: function() {
 		var nextState = new GameOverState(false,this._money);
@@ -8413,6 +8421,7 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		this._hud.updateHUD(this._lives,this._money,this._stage);
 		PlayState._player.set_x(PlayState.spr_cam.x);
 		PlayState._player.set_y(PlayState.spr_cam.y);
+		this._iframes = 100;
 		this.add(PlayState._player);
 	}
 	,removeALL: function() {
@@ -8449,9 +8458,10 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,buyLive: function() {
-		if(this._money > 9 && this._lives < 3) {
+		if(this._money > 99 && this._lives < 3) {
 			this._money -= 10;
 			this._lives++;
+			this._hud.updateHUD(this._lives,this._money,this._stage);
 		}
 	}
 	,checkEnemyVision: function(e) {
@@ -8471,6 +8481,8 @@ PlayState.prototype = $extend(flixel_FlxState.prototype,{
 	,bulletHits: function(Object1,Object2) {
 		Object1.kill();
 		Object2.destroy();
+		this._money++;
+		this._hud.updateHUD(this._lives,this._money,this._stage);
 	}
 	,stage: function(stage) {
 		var i = new flixel_group_FlxTypedGroupIterator(this._grpEnemies.members,null);
