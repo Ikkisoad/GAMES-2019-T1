@@ -73,6 +73,9 @@ class PlayState extends FlxState{
 			FlxG.camera.fade(FlxColor.BLACK, .33, false, end);
 			return;
 		}
+
+		buyLive();
+		
 	}
 
 	function end(){
@@ -165,7 +168,15 @@ class PlayState extends FlxState{
 		if (P.alive && P.exists && C.alive && C.exists){
 			_money++;
 			_hud.updateHUD(_lives, _money, _stage);
+			buyLive();
 			C.kill();
+		}
+	}
+
+	function buyLive():Void{
+		if(_money > 9 && _lives < 3){
+			_money -= 10;
+			_lives++;
 		}
 	}
 

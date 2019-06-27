@@ -18,7 +18,7 @@ class MenuState extends FlxState{
         _title.x = FlxG.width/2 - _title.width/2;
         _title.y = FlxG.height/4;
 
-        _instructions = new FlxText(0,0,0,"Use WASD and Arrow Keys for movement\nUse SPACE and Left Mouse Button to shoot",15);
+        _instructions = new FlxText(0,0,0,"Use WASD or Arrow Keys for movement\nUse SPACE or Left Mouse Button to shoot",15);
         _instructions.x = _title.x;
         _instructions.y = _title.y + 150;
 

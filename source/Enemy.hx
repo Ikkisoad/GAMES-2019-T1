@@ -73,7 +73,7 @@
         if (seesPlayer)
         {
             _brain.activeState = chase;
-        }
+        }/*
         else if (_idleTmr <= 0)
         {
             if (FlxG.random.bool(1))
@@ -92,7 +92,7 @@
             _idleTmr = FlxG.random.int(1, 4);            
         }
         else
-            _idleTmr -= FlxG.elapsed;
+            _idleTmr -= FlxG.elapsed;*/
 
     }
 

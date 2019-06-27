@@ -8,7 +8,7 @@ import flixel.ui.FlxButton;
 class CreditsState extends FlxState {
     var _creditsText:FlxText;
     var _btnBack:FlxButton;
-    var _CREDITS_VELOCITY = -256;
+    var _CREDITS_VELOCITY = -100;
 
     override public function create():Void{
         _creditsText = new FlxText(0,0,0,"Created by:\nIkkisoad\nTile by:\nIkkisoad\nSprites by:\nIkkisoad\nSpecial thanks:\nHaxeFlixel",12);
